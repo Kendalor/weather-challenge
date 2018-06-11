@@ -11,6 +11,13 @@ public final class App {
     public static void main(String... args) {
 
         // Your preparation code …
+        String path="C:\\Users\\Kendalor\\IdeaProjects\\programming-challenge\\src\\main\\resources\\de\\exxcellent\\challenge\\weather.csv";
+        DataFrame df = new DataFrame();
+
+        df.read_csv(path);
+        System.out.println(df.toString());
+
+
 
         String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         String teamWithSmallesGoalSpread = "A good team"; // Your goal analysis function call …
