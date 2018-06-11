@@ -11,16 +11,20 @@ public final class App {
     public static void main(String... args) {
 
         // Your preparation code …
-        String path="C:\\Users\\Kendalor\\IdeaProjects\\programming-challenge\\src\\main\\resources\\de\\exxcellent\\challenge\\weather.csv";
-        DataFrame df = new DataFrame();
+        String path="C:\\Users\\Kendalor\\IdeaProjects\\programming-challenge\\src\\main\\resources\\de\\exxcellent\\challenge\\";
+        DataFrame df1 = new DataFrame();
+        DataFrame df2 = new DataFrame();
 
-        df.read_csv(path);
-        System.out.println(df.toString());
+        df1.read_csv(path+"weather.csv");
+        df1.addDiffColumn("diff","MxT","MnT");
+
+        df2.read_csv(path+"football.csv");
+        df2.addDiffColumn("diff","Goals","Goals Allowed");
 
 
 
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
-        String teamWithSmallesGoalSpread = "A good team"; // Your goal analysis function call …
+        String dayWithSmallestTempSpread = df1.getColumn("Day").getValueAt(df1.getColumn("diff").indexOfMin());     // Your day analysis function call …
+        String teamWithSmallesGoalSpread = df2.getColumn("Team").getValueAt(df2.getColumn("diff").indexOfMin());; // Your goal analysis function call …
 
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallesGoalSpread);

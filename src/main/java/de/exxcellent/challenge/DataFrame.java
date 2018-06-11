@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import org.apache.commons.lang.ArrayUtils;
+import java.lang.Math;
 /**
  * Representation of a Data Set
  */
@@ -23,7 +23,24 @@ public class DataFrame {
                 '}';
     }
 
-    public
+    public Column getColumn(String key){
+        return data.get(key);
+    }
+
+    public void addDiffColumn(String name,String col1,String col2){
+
+        String[] data1=this.getColumn(col1).getValues();
+        String[] data2=this.getColumn(col2).getValues();
+        Float[] data3= new Float[data1.length];
+        for(int i=0;i<data1.length; i++){
+            data3[i]=Math.abs(Float.parseFloat(data1[i]) - Float.parseFloat( data2[i]));
+
+        }
+        data.put(name,new Column(name));
+        for(int i=0; i<data3.length; i++){
+            data.get(name).add(Float.toString(data3[i]));
+        }
+    }
 
     public void read_csv(String filename){
         // Got this from: https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
@@ -42,7 +59,7 @@ public class DataFrame {
                 // use comma as separator
                 if(readHeader){
                     header = line.split(cvsSplitBy);
-                    System.out.println("Reading Header of Length: "+ header.length);
+                    //System.out.println("Reading Header of Length: "+ header.length);
                     for(int i=0; i< header.length; i++){
                         data.put(header[i], new Column(header[i]));
                     }
@@ -50,7 +67,7 @@ public class DataFrame {
                 } else {
                     String[] row = line.split(cvsSplitBy);
                     for (int i = 0; i < row.length; i++) {
-                        data.get(header[i]).add(ArrayUtils.toObject(row[i]));
+                        data.get(header[i]).add( row[i]);
                     }
                 }
             }
